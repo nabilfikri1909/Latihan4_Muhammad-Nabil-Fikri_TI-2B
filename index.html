@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Pendaftaran HIMATIK</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin-top: 20px;
+      letter-spacing: 2px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      padding: 20px;
+      width: 90%;
+      max-width: 900px;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      color: black;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    td {
+      padding: 12px;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      transition: 0.3s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #2c5364;
+      outline: none;
+      box-shadow: 0 0 5px #2c5364;
+    }
+
+    .inline {
+      width: auto;
+    }
+
+    .btn {
+      background: linear-gradient(45deg, #2c5364, #00c6ff);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 8px;
+      margin: 5px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    canvas {
+      margin-top: 20px;
+      border-radius: 10px;
+      background: white;
+    }
+
+    .logo {
+      width: 100px;
+      display: block;
+      margin: 20px auto;
+      transition: 0.3s;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}
+
+    #preview {
+      width: 100px;
+      margin-top: 10px;
+      display: none;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGO HIMATIK -->
+<img src="logo himatik.jpeg" alt="Logo HIMATIK" class="logo">
+
+<h1>FORM PENDAFTARAN HIMATIK</h1>
+
+<!-- SVG LOGO -->
+
+<div class="card">
+<form>
+  <table border="1">
+
+    <tr>
+      <td><label>Nama Lengkap</label></td>
+      <td><input type="text" name="nama" required></td>
+    </tr>
+
+    <tr>
+      <td><label>NIM</label></td>
+      <td><input type="text" name="nim" required></td>
+    </tr>
+
+    <tr>
+      <td><label>Email</label></td>
+      <td><input type="email" name="email" required></td>
+    </tr>
+
+    <tr>
+      <td><label>Password</label></td>
+      <td><input type="password" name="password" required></td>
+    </tr>
+
+    <tr>
+      <td><label>Hobi</label></td>
+     <td><input type="text" name="hobi" required></td>
+    </tr>
+
+    <tr>
+      <td><label>Jenis Kelamin</label></td>
+      <td>
+        <input class="inline" type="radio" name="jk"> Laki-laki
+        <input class="inline" type="radio" name="jk"> Perempuan
+      </td>
+    </tr>
+
+    <tr>
+      <td><label>Program Studi</label></td>
+      <td>
+        <select name="prodi">
+          <option>Teknik Informatika</option>
+          <option>Sistem Informasi</option>
+          <option>Teknologi Informasi</option>
+        </select>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label>Tanggal Lahir</label></td>
+      <td><input type="date" name="ttl"></td>
+    </tr>
+
+    <tr>
+      <td><label>Upload Foto</label></td>
+      <td>
+        <input type="file" onchange="previewImage(event)">
+        <br>
+        <img id="preview">
+      </td>
+    </tr>
+
+    <tr>
+      <td><label>Motivasi</label></td>
+      <td><textarea rows="4"></textarea></td>
+    </tr>
+
+    <tr>
+      <td><label>Skill IT</label></td>
+      <td><input type="range" min="0" max="100"></td>
+    </tr>
+
+    <tr>
+      <td><label>Warna Favorit</label></td>
+      <td><input type="color"></td>
+    </tr>
+
+    <tr>
+      <td colspan="2" align="center">
+        <button type="submit" class="btn">Daftar</button>
+        <button type="reset" class="btn">Reset</button>
+      </td>
+    </tr>
+
+  </table>
+</form>
+</div>
+
+<!-- CANVAS -->
+<canvas id="myCanvas" width="300" height="150"></canvas>
+
+<script>
+  var c = document.getElementById("myCanvas");
+  var ctx = c.getContext("2d");
+
+  var x = 0;
+
+  // Load gambar logo
+  var logo = new Image();
+  logo.src = "logo himatik.jpeg";
+
+  var x = 0;
+var speed = 2;
+
+var logo = new Image();
+logo.src = "logo himatik.jpeg";
+
+function animate() {
+  ctx.clearRect(0, 0, c.width, c.height);
+
+  ctx.drawImage(logo, x, 30, 80, 80);
+
+  x += speed;
+  if (x + 80 > c.width || x < 0) speed *= -1;
+
+  requestAnimationFrame(animate);
+}
+
+logo.onload = function() {
+  animate();
+};
+</script>
+
+</body>
+</html>
